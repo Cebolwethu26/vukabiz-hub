@@ -86,11 +86,17 @@ export function AppShell({
           <div className="rounded-lg bg-sidebar-accent p-3">
             <p className="truncate text-xs text-sidebar-foreground/70">Signed in as</p>
             <p className="truncate text-sm font-medium text-sidebar-accent-foreground">
-              {user?.email ?? "Guest"}
+              {user?.email ?? "Guest — public view"}
             </p>
-            <Button variant="outline" size="sm" className="mt-3 w-full" onClick={signOut}>
-              <LogOut className="size-4" /> Sign out
-            </Button>
+            {user ? (
+              <Button variant="outline" size="sm" className="mt-3 w-full" onClick={signOut}>
+                <LogOut className="size-4" /> Sign out
+              </Button>
+            ) : (
+              <Button asChild variant="default" size="sm" className="mt-3 w-full">
+                <Link to="/login">Sign in</Link>
+              </Button>
+            )}
           </div>
         </div>
       </aside>
