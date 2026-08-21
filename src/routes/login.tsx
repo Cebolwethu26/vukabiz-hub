@@ -43,7 +43,10 @@ function LoginPage() {
     setBusy(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Welcome back");
     navigate({ to: "/dashboard", replace: true });
   }
@@ -57,8 +60,14 @@ function LoginPage() {
       options: { emailRedirectTo: window.location.origin, data: { full_name: fullName } },
     });
     setBusy(false);
-    if (error) return toast.error(error.message);
-    if (!data.session) return toast.success("Check your email to confirm your account.");
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    if (!data.session) {
+      toast.success("Check your email to confirm your account.");
+      return;
+    }
     navigate({ to: "/dashboard", replace: true });
   }
 
@@ -70,7 +79,10 @@ function LoginPage() {
       options: { emailRedirectTo: window.location.origin },
     });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Magic link sent — check your inbox.");
   }
 
